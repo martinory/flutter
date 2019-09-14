@@ -448,6 +448,8 @@ class FloatingActionButton extends StatelessWidget {
       focusElevation: focusElevation,
       hoverElevation: hoverElevation,
       highlightElevation: highlightElevation,
+      splashColor: theme.floatingActionButtonTheme.hoverColor,
+      highlightColor:  theme.floatingActionButtonTheme.hoverColor,
       disabledElevation: disabledElevation,
       constraints: _sizeConstraints,
       materialTapTargetSize: materialTapTargetSize,

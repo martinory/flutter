@@ -311,18 +311,16 @@ class IconButton extends StatelessWidget {
       enabled: onPressed != null,
       child: Focus(
         focusNode: focusNode,
-        child: InkResponse(
+        child: InkWell(
           onTap: onPressed,
           child: result,
           focusColor: focusColor ?? Theme.of(context).focusColor,
           hoverColor: hoverColor ?? Theme.of(context).hoverColor,
           highlightColor: highlightColor ?? Theme.of(context).highlightColor,
-          splashColor: splashColor ?? Theme.of(context).splashColor,
-          radius: math.max(
-            Material.defaultSplashRadius,
-            (iconSize + math.min(padding.horizontal, padding.vertical)) * 0.7,
-            // x 0.5 for diameter -> radius and + 40% overflow derived from other Material apps.
-          ),
+          splashColor: const Color(0x00FFFFFF),
+          radius: 50,
+          customBorder: CircleBorder(),
+          borderRadius: BorderRadius.circular(100),
         ),
       ),
     );

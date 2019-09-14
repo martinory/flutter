@@ -113,6 +113,7 @@ class Draggable<T> extends StatefulWidget {
     this.onDraggableCanceled,
     this.onDragEnd,
     this.onDragCompleted,
+    this.onMove,
     this.ignoringFeedbackSemantics = true,
   }) : assert(child != null),
        assert(feedback != null),
@@ -241,6 +242,8 @@ class Draggable<T> extends StatefulWidget {
   /// callback is still in the tree.
   final VoidCallback onDragCompleted;
 
+  final ValueChanged<Offset> onMove;
+
   /// Called when the draggable is dropped.
   ///
   /// The velocity and offset at which the pointer was moving when it was
@@ -290,6 +293,7 @@ class LongPressDraggable<T> extends Draggable<T> {
     DraggableCanceledCallback onDraggableCanceled,
     DragEndCallback onDragEnd,
     VoidCallback onDragCompleted,
+    ValueChanged<Offset> onMove,
     this.hapticFeedbackOnStart = true,
     bool ignoringFeedbackSemantics = true,
   }) : super(
@@ -305,6 +309,7 @@ class LongPressDraggable<T> extends Draggable<T> {
     onDragStarted: onDragStarted,
     onDraggableCanceled: onDraggableCanceled,
     onDragEnd: onDragEnd,
+    onMove: onMove,
     onDragCompleted: onDragCompleted,
     ignoringFeedbackSemantics: ignoringFeedbackSemantics,
   );
@@ -380,6 +385,7 @@ class _DraggableState<T> extends State<Draggable<T>> {
     });
     final _DragAvatar<T> avatar = _DragAvatar<T>(
       overlayState: Overlay.of(context, debugRequiredFor: widget),
+      onMove: widget.onMove,
       data: widget.data,
       axis: widget.axis,
       initialPosition: position,
@@ -580,6 +586,7 @@ class _DragAvatar<T> extends Drag {
     this.feedback,
     this.feedbackOffset = Offset.zero,
     this.onDragEnd,
+    this.onMove,
     @required this.ignoringFeedbackSemantics,
   }) : assert(overlayState != null),
        assert(ignoringFeedbackSemantics != null),
@@ -606,6 +613,8 @@ class _DragAvatar<T> extends Drag {
   Offset _lastOffset;
   OverlayEntry _entry;
 
+  final ValueChanged<Offset> onMove;
+
   @override
   void update(DragUpdateDetails details) {
     _position += _restrictAxis(details.delta);
@@ -626,6 +635,9 @@ class _DragAvatar<T> extends Drag {
   void updateDrag(Offset globalPosition) {
     _lastOffset = globalPosition - dragStartPoint;
     _entry.markNeedsBuild();
+
+    onMove(globalPosition);
+
     final HitTestResult result = HitTestResult();
     WidgetsBinding.instance.hitTest(result, globalPosition + feedbackOffset);
 

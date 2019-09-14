@@ -86,7 +86,6 @@ class BackButton extends StatelessWidget {
     return IconButton(
       icon: const BackButtonIcon(),
       color: color,
-      tooltip: MaterialLocalizations.of(context).backButtonTooltip,
       onPressed: () {
         Navigator.maybePop(context);
       },
@@ -119,7 +118,6 @@ class CloseButton extends StatelessWidget {
     assert(debugCheckHasMaterialLocalizations(context));
     return IconButton(
       icon: const Icon(Icons.close),
-      tooltip: MaterialLocalizations.of(context).closeButtonTooltip,
       onPressed: () {
         Navigator.maybePop(context);
       },

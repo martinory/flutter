@@ -278,15 +278,16 @@ class SwitchListTile extends StatelessWidget {
     this.title,
     this.subtitle,
     this.isThreeLine = false,
+    this.contentPadding,
     this.dense,
     this.secondary,
     this.selected = false,
-  }) : _switchListTileType = _SwitchListTileType.material,
-       assert(value != null),
-       assert(isThreeLine != null),
-       assert(!isThreeLine || subtitle != null),
-       assert(selected != null),
-       super(key: key);
+  })  : _switchListTileType = _SwitchListTileType.material,
+        assert(value != null),
+        assert(isThreeLine != null),
+        assert(!isThreeLine || subtitle != null),
+        assert(selected != null),
+        super(key: key);
 
   /// Creates the wrapped switch with [Switch.adaptive].
   ///
@@ -309,15 +310,16 @@ class SwitchListTile extends StatelessWidget {
     this.title,
     this.subtitle,
     this.isThreeLine = false,
+    this.contentPadding,
     this.dense,
     this.secondary,
     this.selected = false,
-  }) : _switchListTileType = _SwitchListTileType.adaptive,
-       assert(value != null),
-       assert(isThreeLine != null),
-       assert(!isThreeLine || subtitle != null),
-       assert(selected != null),
-       super(key: key);
+  })  : _switchListTileType = _SwitchListTileType.adaptive,
+        assert(value != null),
+        assert(isThreeLine != null),
+        assert(!isThreeLine || subtitle != null),
+        assert(selected != null),
+        super(key: key);
 
   /// Whether this switch is checked.
   ///
@@ -404,6 +406,14 @@ class SwitchListTile extends StatelessWidget {
   /// null and treated as having two lines if the subtitle is non-null.
   final bool isThreeLine;
 
+  /// The tile's internal padding.
+  ///
+  /// Insets a [ListTile]'s contents: its [leading], [title], [subtitle],
+  /// and [trailing] widgets.
+  ///
+  /// If null, `EdgeInsets.symmetric(horizontal: 16.0)` is used.
+  final EdgeInsetsGeometry contentPadding;
+
   /// Whether this list tile is part of a vertically dense list.
   ///
   /// If this property is null then its value is based on [ListTileTheme.dense].
@@ -461,9 +471,14 @@ class SwitchListTile extends StatelessWidget {
           subtitle: subtitle,
           trailing: control,
           isThreeLine: isThreeLine,
+          contentPadding: contentPadding,
           dense: dense,
           enabled: onChanged != null,
-          onTap: onChanged != null ? () { onChanged(!value); } : null,
+          onTap: onChanged != null
+              ? () {
+                  onChanged(!value);
+                }
+              : null,
           selected: selected,
         ),
       ),
